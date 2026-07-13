@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Planner | Student Portfolio</title>
+    <style>
+        /* Modern UI Variables & Reset */
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --accent-blue: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --success-green: #34d399;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-stack);
+            line-height: 1.6;
+            padding-top: 80px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Glassmorphism Navigation Bar */
+        .navbar {
+            background-color: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .nav-logo {
+            color: var(--accent-blue);
+            font-weight: 700;
+            font-size: 1.25rem;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-blue);
+        }
+
+        /* Layout Container */
+        .portfolio-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem;
+        }
+
+        .portfolio-header {
+            margin-bottom: 3rem;
+        }
+
+        .portfolio-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .portfolio-header .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Planner Main Layout Card */
+        .planner-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+
+        .planner-card h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--accent-blue);
+        }
+
+        /* Premium Form Dashboard Form Control */
+        .task-form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .task-input {
+            flex-grow: 1;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .task-input:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .btn-add {
+            background-color: var(--accent-blue);
+            color: var(--bg-dark);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-add:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Premium Application Data Table */
+        .task-table-wrapper {
+            overflow-x: auto;
+        }
+
+        .task-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .task-table th {
+            border-bottom: 2px solid var(--border-color);
+            padding: 1rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        .task-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .task-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Status Badge Workflows */
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background-color: rgba(56, 189, 248, 0.1);
+            color: var(--accent-blue);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .status-badge.complete {
+            background-color: rgba(52, 211, 153, 0.1);
+            color: var(--success-green);
+            border: 1px solid rgba(52, 211, 153, 0.2);
+        }
+
+        /* Global Footer Architecture */
+        .site-footer {
+            margin-top: 5rem;
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Mobile Breakpoint Layouts */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .task-form {
+                flex-direction: column;
+            }
+            .btn-add {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Connected Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">&lt;DevPortfolio /&gt;</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="planner.html" class="active">Planner</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="portfolio-container">
+        
+        <header class="portfolio-header">
+            <h1>Academic Planner</h1>
+            <p class="subtitle">Organize, monitor, and streamline your computational academic tasks.</p>
+        </header>
+
+        <!-- Dynamic Control Dashboard Card -->
+        <div class="planner-card">
+            <h2>My Academic Tasks</h2>
+            
+            <!-- Modern Styled Input Section -->
+            <form class="task-form" onsubmit="event.preventDefault();">
+                <input type="text" class="task-input" placeholder="Enter a new academic task (e.g., Complete Python Assignment)...">
+                <button type="submit" class="btn-add">Add Task</button>
+            </form>
+
+            <!-- Real-World UI Data Table Structure -->
+            <div class="task-table-wrapper">
+                <table class="task-table">
+                    <thead>
+                        <tr>
+                            <th>Task Description</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Build Portfolio Website Shell</td>
+                            <td>Web Dev</td>
+                            <td><span class="status-badge complete">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>Link Multi-page Navigation Headers</td>
+                            <td>Web Dev</td>
+                            <td><span class="status-badge complete">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>Configure Academic Planner Layout Tables</td>
+                            <td>UI/UX</td>
+                            <td><span class="status-badge"><center>In</center>Progress</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- Cohesive Structural Footer -->
+        <footer class="site-footer">
+            <p>&copy; 2026 Student Portfolio. All Rights Reserved.</p>
+        </footer>
+
+    </main>
+
+</body>
+</html>
